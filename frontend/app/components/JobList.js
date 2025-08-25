@@ -4,6 +4,9 @@
 
 import { useState, useEffect } from 'react';
 
+// --- IMPORTANT: Define the live backend URL here ---
+const API_BASE_URL = 'https://textile-saas-project.onrender.com';
+
 export default function JobList() {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +16,8 @@ export default function JobList() {
   const fetchJobs = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5001/api/jobs');
+      // --- UPDATED LINE ---
+      const response = await fetch(`${API_BASE_URL}/api/jobs`); 
       if (!response.ok) {
         throw new Error('Data could not be fetched!');
       }
@@ -34,7 +38,6 @@ export default function JobList() {
   const handleApply = async (jobId) => {
     // In a real app, you would get the gig_worker_id from a logged-in user.
     // We will hardcode it to 1 for this prototype.
-    // IMPORTANT: Make sure you have a gig_worker with id=1 in your database!
     const applicationData = {
       job_id: jobId,
       gig_worker_id: 1, 
@@ -43,7 +46,8 @@ export default function JobList() {
     setNotification('Submitting application...'); // Give user feedback
 
     try {
-      const response = await fetch('http://localhost:5001/api/applications', {
+      // --- UPDATED LINE ---
+      const response = await fetch(`${API_BASE_URL}/api/applications`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -4,6 +4,9 @@
 
 import { useState } from 'react';
 
+// --- IMPORTANT: Define the live backend URL here ---
+const API_BASE_URL = 'https://textile-saas-project.onrender.com';
+
 // Basic styling for the form
 const styles = {
   container: { maxWidth: '600px', margin: '40px auto', padding: '20px', border: '1px solid #555', borderRadius: '8px' },
@@ -36,7 +39,8 @@ export default function PostJobPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:5001/api/jobs', {
+      // --- UPDATED LINE ---
+      const response = await fetch(`${API_BASE_URL}/api/jobs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +84,7 @@ export default function PostJobPage() {
         </div>
         <div style={styles.formGroup}>
           <label htmlFor="pay" style={styles.label}>Pay per Day (₹)</label>
-          <input type="number" id="pay" value={payPerDay} onChange={(e) => setPayPerDay(e.target.value)} required style={styles.input} />
+          <input type="number" id="pay" value={payPerDay} onChange={(e) => setPayPerDay(e.g.value)} required style={styles.input} />
         </div>
         <button type="submit" style={styles.button}>Post Job</button>
       </form>
