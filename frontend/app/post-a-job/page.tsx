@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 // --- IMPORTANT: Define the live backend URL here ---
 const API_BASE_URL = 'https://textile-saas-project.onrender.com';
@@ -39,7 +39,6 @@ export default function PostJobPage() {
     };
 
     try {
-      // --- UPDATED LINE ---
       const response = await fetch(`${API_BASE_URL}/api/jobs`, {
         method: 'POST',
         headers: {
@@ -48,7 +47,7 @@ export default function PostJobPage() {
         body: JSON.stringify(jobData),
       });
 
-      if (!response.ok) {
+      if (!response..ok) {
         throw new Error('Failed to post job. Please check your inputs.');
       }
       
@@ -60,9 +59,13 @@ export default function PostJobPage() {
       setRequiredWorkers('');
       setPayPerDay('');
 
-    } catch (error: any) {
+    } catch (error) { // This block is corrected for TypeScript
       setIsError(true);
-      setMessage(error.message);
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
     }
   };
 
@@ -84,7 +87,7 @@ export default function PostJobPage() {
         </div>
         <div style={styles.formGroup}>
           <label htmlFor="pay" style={styles.label}>Pay per Day (₹)</label>
-          <input type="number" id="pay" value={payPerDay} onChange={(e) => setPayPerDay(e.g.value)} required style={styles.input} />
+          <input type="number" id="pay" value={payPerDay} onChange={(e) => setPayPerDay(e.target.value)} required style={styles.input} />
         </div>
         <button type="submit" style={styles.button}>Post Job</button>
       </form>
