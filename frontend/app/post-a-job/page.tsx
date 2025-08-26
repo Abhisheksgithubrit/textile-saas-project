@@ -5,6 +5,15 @@ import React, { useState } from 'react';
 // --- IMPORTANT: Define the live backend URL here ---
 const API_BASE_URL = 'https://textile-saas-project.onrender.com';
 
+// Types for job form data
+interface JobData {
+  title: string;
+  description: string;
+  required_workers: number;
+  pay_per_day: number;
+  manufacturer_id: number;
+}
+
 // Basic styling for the form
 const styles = {
   container: {
@@ -45,12 +54,12 @@ export default function PostJobPage() {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsError(false);
     setMessage('');
 
-    const jobData = {
+    const jobData: JobData = {
       title,
       description,
       required_workers: parseInt(requiredWorkers, 10),
@@ -61,9 +70,7 @@ export default function PostJobPage() {
     try {
       const response = await fetch(`${API_BASE_URL}/api/jobs`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jobData),
       });
 
@@ -71,7 +78,7 @@ export default function PostJobPage() {
         throw new Error('Failed to post job. Please check your inputs.');
       }
 
-      const newJob = await response.json();
+      const newJob: JobData = await response.json();
       setMessage(`✅ Success! Job "${newJob.title}" has been posted.`);
 
       // Clear form
@@ -79,7 +86,7 @@ export default function PostJobPage() {
       setDescription('');
       setRequiredWorkers('');
       setPayPerDay('');
-    } catch (error: unknown) {
+    } catch (error) {
       setIsError(true);
       if (error instanceof Error) {
         setMessage(error.message);
