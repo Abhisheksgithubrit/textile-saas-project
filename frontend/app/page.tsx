@@ -59,14 +59,15 @@ export default function PostJobPage() {
       setRequiredWorkers('');
       setPayPerDay('');
 
-    } catch (error) { // This block is corrected for TypeScript
-      setIsError(true);
-      if (error instanceof Error) {
-        setMessage(error.message);
-      } else {
-        setMessage('An unexpected error occurred.');
-      }
-    }
+    } catch (error) {
+  setIsError(true);
+  if (error instanceof Error) {
+    setMessage(error.message);
+  } else {
+    setMessage("An unexpected error occurred.");
+  }
+}
+
   };
 
   return (
