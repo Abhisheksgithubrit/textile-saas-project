@@ -86,10 +86,10 @@ export default function PostJobPage() {
       setDescription('');
       setRequiredWorkers('');
       setPayPerDay('');
-    } catch (error) {
+    } catch (err: unknown) {
       setIsError(true);
-      if (error instanceof Error) {
-        setMessage(error.message);
+      if (err instanceof Error) {
+        setMessage(err.message);
       } else {
         setMessage('An unexpected error occurred.');
       }

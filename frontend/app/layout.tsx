@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Page metadata (can be customized)
+// Page metadata
 export const metadata: Metadata = {
   title: "Textile Marketplace",
   description: "A modern textile marketplace built with Next.js",
