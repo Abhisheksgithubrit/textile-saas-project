@@ -2,75 +2,44 @@
 
 import React, { useState } from 'react';
 
-// --- IMPORTANT: Define the live backend URL here ---
 const API_BASE_URL = 'https://textile-saas-project.onrender.com';
 
-// Types for job form data
-interface JobData {
-  title: string;
-  description: string;
-  required_workers: number;
-  pay_per_day: number;
-  manufacturer_id: number;
-}
-
-// Basic styling for the form
 const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '40px auto',
-    padding: '20px',
-    border: '1px solid #555',
-    borderRadius: '8px',
-  },
+  container: { maxWidth: '600px', margin: '40px auto', padding: '20px', border: '1px solid #555', borderRadius: '8px' },
   formGroup: { marginBottom: '15px' },
   label: { display: 'block', marginBottom: '5px' },
-  input: {
-    width: '100%',
-    padding: '8px',
-    borderRadius: '4px',
-    border: '1px solid #555',
-    backgroundColor: '#222',
-    color: '#fff',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '4px',
-    border: 'none',
-    backgroundColor: '#0070f3',
-    color: 'white',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-  message: { marginTop: '15px', padding: '10px', borderRadius: '4px' },
+  input: { width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#222', color: '#fff' },
+  button: { width: '100%', padding: '10px', borderRadius: '4px', border: 'none', backgroundColor: '#0070f3', color: 'white', cursor: 'pointer', fontSize: '16px' },
+  message: { marginTop: '15px', padding: '10px', borderRadius: '4px' }
 };
 
 export default function PostJobPage() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [requiredWorkers, setRequiredWorkers] = useState('');
-  const [payPerDay, setPayPerDay] = useState('');
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [requiredWorkers, setRequiredWorkers] = useState<string>('');
+  const [payPerDay, setPayPerDay] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
+  const [isError, setIsError] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsError(false);
     setMessage('');
 
-    const jobData: JobData = {
+    const jobData = {
       title,
       description,
       required_workers: parseInt(requiredWorkers, 10),
       pay_per_day: parseFloat(payPerDay),
-      manufacturer_id: 1, // Hardcoding manufacturer ID 1 for now
+      manufacturer_id: 1
     };
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/jobs`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(jobData),
       });
 
@@ -78,20 +47,19 @@ export default function PostJobPage() {
         throw new Error('Failed to post job. Please check your inputs.');
       }
 
-      const newJob: JobData = await response.json();
-      setMessage(`✅ Success! Job "${newJob.title}" has been posted.`);
-
-      // Clear form
+      // Assuming newJob has type { title: string }
+      const newJob: { title: string } = await response.json();
+      setMessage(`Success! Job "${newJob.title}" has been posted.`);
       setTitle('');
       setDescription('');
       setRequiredWorkers('');
       setPayPerDay('');
-    } catch (err: unknown) {
+    } catch (error) {
       setIsError(true);
-      if (err instanceof Error) {
-        setMessage(err.message);
+      if (error instanceof Error) {
+        setMessage(error.message);
       } else {
-        setMessage('An unexpected error occurred.');
+        setMessage("An unexpected error occurred.");
       }
     }
   };
@@ -101,72 +69,25 @@ export default function PostJobPage() {
       <h1>Post a New Job</h1>
       <form onSubmit={handleSubmit}>
         <div style={styles.formGroup}>
-          <label htmlFor="title" style={styles.label}>
-            Job Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            style={styles.input}
-          />
+          <label htmlFor="title" style={styles.label}>Job Title</label>
+          <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required style={styles.input} />
         </div>
-
         <div style={styles.formGroup}>
-          <label htmlFor="description" style={styles.label}>
-            Description
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            style={{ ...styles.input, height: '100px' }}
-          />
+          <label htmlFor="description" style={styles.label}>Description</label>
+          <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} style={{...styles.input, height: '100px'}} />
         </div>
-
         <div style={styles.formGroup}>
-          <label htmlFor="workers" style={styles.label}>
-            Workers Needed
-          </label>
-          <input
-            type="number"
-            id="workers"
-            value={requiredWorkers}
-            onChange={(e) => setRequiredWorkers(e.target.value)}
-            required
-            style={styles.input}
-          />
+          <label htmlFor="workers" style={styles.label}>Workers Needed</label>
+          <input type="number" id="workers" value={requiredWorkers} onChange={(e) => setRequiredWorkers(e.target.value)} required style={styles.input} />
         </div>
-
         <div style={styles.formGroup}>
-          <label htmlFor="pay" style={styles.label}>
-            Pay per Day (₹)
-          </label>
-          <input
-            type="number"
-            id="pay"
-            value={payPerDay}
-            onChange={(e) => setPayPerDay(e.target.value)}
-            required
-            style={styles.input}
-          />
+          <label htmlFor="pay" style={styles.label}>Pay per Day (₹)</label>
+          <input type="number" id="pay" value={payPerDay} onChange={(e) => setPayPerDay(e.target.value)} required style={styles.input} />
         </div>
-
-        <button type="submit" style={styles.button}>
-          Post Job
-        </button>
+        <button type="submit" style={styles.button}>Post Job</button>
       </form>
-
       {message && (
-        <div
-          style={{
-            ...styles.message,
-            backgroundColor: isError ? '#800' : '#050',
-            color: 'white',
-          }}
-        >
+        <div style={{...styles.message, backgroundColor: isError ? '#800' : '#050', color: 'white'}}>
           {message}
         </div>
       )}
