@@ -1,6 +1,6 @@
 // frontend/app/page.tsx
 
-import JobList from './components/JobList';
+import JobList from '../components/JobList';
 
 export default function Home() {
   return (
