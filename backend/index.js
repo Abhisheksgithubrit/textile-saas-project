@@ -8,21 +8,25 @@ const jobRoutes = require('./src/routes/jobsRoutes');
 const applicationRoutes = require('./src/routes/applicationsRoutes');
 
 const app = express();
-// Render sets its own PORT, so we don't need a fallback for production
-const PORT = process.env.PORT; 
+const PORT = process.env.PORT || 5001;
 
-// --- CORS Configuration ---
+// --- FINAL CORS Configuration ---
+// This list MUST contain all the domains your frontend is served from.
 const allowedOrigins = [
-    'https://textile-saas-project.vercel.app/' // Your live Vercel URL
+    'https://textile-saas-project.vercel.app',
+    'https://textile-saas-project-git-main-abhishek-n-alavandis-projects.vercel.app',
+    'https://textile-saas-project-hxd6itqkw-abhishek-n-alavandis-projects.vercel.app'
+    
+    // Add any other domains from your Vercel "Domains" page here if you have them
 ];
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests from the whitelist
+        // Allow requests that are in our whitelist
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
-            // Block requests from other origins
+            // Block all other requests
             callback(new Error('This origin is not allowed by CORS'));
         }
     }
