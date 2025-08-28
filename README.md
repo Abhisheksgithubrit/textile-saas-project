@@ -33,6 +33,36 @@ The application is fully deployed and accessible at the following URLs:
 
 ---
 
+---
+
+## 📸 Screenshots
+
+Here is a walkthrough of the live application's core functionality.
+
+#### 1. Posting a New Job
+Manufacturers can easily post new jobs through a dedicated form on the live website.
+
+![WhatsApp Image 2025-08-29 at 00 27 57_af0970ab](https://github.com/user-attachments/assets/c0c01174-3439-4143-b010-be3043a235ac)
+
+
+#### 2. Successful Job Creation
+Upon submission, the form clears and a success message confirms that the job has been posted to the live database via the backend API.
+
+![WhatsApp Image 2025-08-29 at 00 25 50_a4b4534f](https://github.com/user-attachments/assets/25236b20-4c68-47ee-b466-2a3138033bc8)
+
+
+#### 3. Live Job Board
+The new job instantly appears on the main homepage for gig workers to see.
+![WhatsApp Image 2025-08-29 at 00 25 28_be83dbeb](https://github.com/user-attachments/assets/60fce413-9ebd-4aa8-ae36-b7c1fb6c416a)
+
+
+
+#### 4. Real-time WhatsApp Notification
+This is the core feature of the assignment. When a worker clicks "Apply Now", the manufacturer receives an instant, automated WhatsApp message with the details of the application, powered by the Twilio API.
+![WhatsApp Image 2025-08-29 at 00 42 06_63fb2d0c](https://github.com/user-attachments/assets/f9f226ec-e750-4bb6-8475-5bf917c04699)
+
+---
+
 ## 📂 Project Structure
 
 This project uses a monorepo structure to keep the frontend and backend code organized and independent.
